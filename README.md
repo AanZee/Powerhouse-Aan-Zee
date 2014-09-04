@@ -37,7 +37,7 @@ When a Front-end Designer is on the team, the developer should also take respons
 - Don't neglect design
 - Support Front-end designers
 
-## Back-end developer
+### Back-end developer
 
 Most of the times the Back-end developer is most distant from the actual design, often doing only adjustments purely in code. In the case of FPM his role mainly consists out of turning static HTMl into dynamic views. Often the Back-end developer is also last in the chain and sometimes design details are left unnoticed, such as class names which address state or other peculiarities.
 
@@ -49,6 +49,8 @@ If you think markup is incorrect, or the design doesn't support the actual conte
 
 
 # All about styles
+
+*Not quite sure if you understand Sass? [Check out the online guide.](http://sass-lang.com/guide)*
 
 FPM promotes a BEM inspired subset called BEMS. This BEM inspired syntax can help to make code clearer and combat complex selector structures. The aim should be developer speed, the following steps should be optimised for developer speed.
 
@@ -227,7 +229,7 @@ Example
 Note that modifiers uses a somewhat different notation than in the presentation.
 ```
 .button__primary
-.flyout__align-top
+.flyout__align-top (?)
 .menu--item__highlight
 ```
 
@@ -286,7 +288,7 @@ Good names for states are:
 With BEM states are often also the same as modifiers, but FPM favors states without the block or element prefixed. As a convention states *never* have global styling. In addition, boolean states should follow the naming convention of is-/has- prefixes. This practice makes it easy for backenders to spot state and easy for Javascript developers to use simple state classes without being aware of what the name of the block or element is.
 
 
-```
+```HTML
 <ul class="menu">
 	<li class="menu--item is-active"><a class="menu--item--link" href="/1">1</a></li>
 	<li class="menu--item"><a class="menu--item--link" href="/2">2</a></li>
@@ -310,7 +312,9 @@ Another benefit is that CSS specifity is almost magically solved by selector ord
 
 }
 
-.article--highlight
+.article__highlight {
+
+}
 ```
 
 
@@ -322,7 +326,11 @@ With BEM there is almost no CSS cascade except with modifiers sometimes.
 }
 ```
 
+#### Dealing with modifiers
+
 ## BEM is ugly!
+
+*Because the double underscore `__` is considered so ugly and it disables some handy editor shortcuts we decided to switch the double syntax for block element seperators with those of the element modifier seperator.*
 
 > A common argument against BEM is that it’s ugly; I dare say that if you shy away from code based purely on its looks then you’re often missing the point. Unless the code becomes unnecessarily difficult to maintain, or genuinely more difficult to read, then perhaps you do need to think twice before using it, but if it ‘just looks odd’ but has a valid purpose, then it should definitely be fully considered before writing it off.
 >
@@ -337,11 +345,12 @@ The main reason why developers think BEM is ugly is mainly because of the double
 Links:
 - [Slideshare BEM it! presentation](http://www.slideshare.net/MaxShirshin/bem-dm)
 - [Sass maps are awesome](http://viget.com/extend/sass-maps-are-awesome)
+- [Avoid @extend it slows down projects](http://stackoverflow.com/questions/13546738/rails-sass-compiles-too-slow-in-a-fast-development-machine)
+- [Sass content directives](http://robots.thoughtbot.com/sasss-content-directive)
+- [Modular css naming conventions](http://thesassway.com/advanced/modular-css-naming-conventions)
 - http://bramsmulders.com/how-i-improved-my-workflow-with-smacss-sass.html
 - http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/
 - http://css-tricks.com/specifics-on-css-specificity/
-- [Avoid @extend it slows down projects](http://stackoverflow.com/questions/13546738/rails-sass-compiles-too-slow-in-a-fast-development-machine)
-- [Sass content directives](http://robots.thoughtbot.com/sasss-content-directive)
 
 ## Module structure
 
