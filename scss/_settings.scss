@@ -1,0 +1,18 @@
+$break-small: 320px;
+$break-large: 1024px;
+
+$the-map: ();
+
+@mixin respond ($min: $break-small, $max: $break-large) {
+	${@content};
+	// $the-map: append($the-map, @content);
+}
+
+
+@include respond () {
+	.sel {
+		color: red;
+	}
+}
+
+@debug $the-map;
