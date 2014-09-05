@@ -1,6 +1,41 @@
-/**
- * Turn one-dimensional maps into properties
- */
+$fixed-break: false !default;
+
+@mixin respond($min-width, $max-width: false) {
+	// If we're outputting for a fixed media query set...
+	@if $fixed-break {
+
+		// ...and if we should apply these rules...
+		@if $fixed-break >= $min-width and ($max-width == false or $fixed-break <= $max-width) {
+			// ...output the content the user gave us.
+			@content;
+		}
+
+	} @else {
+
+		// Otherwise, output it using a regular media query
+		@if $min-width == 0 {
+			@if $max-width == false {
+				@content;
+			} @else {
+				@media screen and (max-width: $max-width - 1) {
+					@content;
+				}
+			}
+		} @elseif $max-width == false {
+        	@media screen and (min-width: $min-width) {
+        	    @content;
+        	}
+        } @else {
+        	@media screen and (min-width: $min-width) and (max-width: $max-width - 1) {
+        	    @content;
+        	}
+        }
+		
+	}
+}
+
+
+/* Turn one-dimensional maps into properties */
 @mixin print-styles ($map) {
 	@each $property, $value in $map {
 		@if type-of($value) != map {
@@ -8,6 +43,7 @@
 		}
 	}
 }
+
 
 /**
  * Font scale function
@@ -17,16 +53,15 @@
  * @arg {bool} $is-font-family-set, when set outputs the font-family statement even on default
  */
 @mixin font-scale ($font-scale-index, $font-map: $font-default, $is-font-family-set: false) {
-	print-styles(map-get($font-map, $font-scale-index));
+	@include print-styles(map-get($font-map, $font-scale-index));
 
-	@if $font-map != $font-default || $is-font-family-set {
+	@if $font-map != $font-default or $is-font-family-set {
 		font-family: map-get($font-map, stack);
 	}
 }
 
-/**
- * Disables the ability to select text on an element
- */
+
+/* Disables the ability to select text on an element */
 @mixin disable-user-select {
 	webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -37,26 +72,202 @@
 	outline-style: none;
 }
 
-/**
- * Padding box
- */
+
+/* Padding box */
 @mixin padding-box {
 	-webkit-background-clip: padding-box;
 	-moz-background-clip: padding;
 	background-clip: padding-box;
 }
 
-/**
- * Great for circled images
- * container probably needs to be floated or needs dimensions
- */
-@mixin circle-container {
-	@include padding-box;
 
+/* Text overflow ellipsis */
+@mixin overflow-ellipsis {
+	white-space: nowrap;
 	overflow: hidden;
-	border-radius: 50%;
+	text-overflow: ellipsis;
+}
 
-	img {
-		display: block;
+
+/* Hypens */
+@mixin hyphens {
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	-ms-hyphens: auto;
+	hyphens: auto;
+	-webkit-hyphenate-before: 3;
+	-webkit-hyphenate-after: 3;
+	hyphenate-before: 3;
+	hyphenate-after: 3;
+}
+
+
+/* Arrows */
+@mixin arrow-up($size: 10px, $color: black) {
+	width: 0;
+	height: 0;
+	border-left: $size solid transparent;
+	border-right: $size solid transparent;
+	border-bottom: $size solid $color;
+}
+
+@mixin arrow-down($size: 10px, $color: black) {
+	width: 0;
+	height: 0;
+	border-left: $size solid transparent;
+	border-right: $size solid transparent;
+	border-top: $size solid $color;
+}
+
+@mixin arrow-right($size: 10px, $color: black) {
+	width: 0;
+	height: 0;
+	border-top: $size solid transparent;
+	border-bottom: $size solid transparent;
+	border-left: $size solid $color;
+}
+
+@mixin arrow-left($size: 10px, $color: black) {
+	width: 0;
+	height: 0;
+	border-top: $size solid transparent;
+	border-bottom: $size solid transparent;
+	border-right: $size solid $color;
+}
+
+@mixin arrow-on-bottom($size: 10px, $color: black, $left: 50%) {
+	position: relative;
+
+	&:after {
+		@include arrow-down($size, $color);
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		bottom: -($size - 1);
+	}
+}
+
+@mixin arrow-on-bottom-line($size: 10px, $line-color: black, $overlay-color: white, $left: 50%) {
+	position: relative;
+	&:before {
+		@include arrow-down($size, $overlay-color);
+		pointer-events: none;
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		bottom: -($size - 1);
+		z-index: 2;
+	}
+
+	&:after {
+		@include arrow-down($size, $line-color);
+		pointer-events: none;
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		bottom: -($size);
+	}
+}
+
+@mixin arrow-on-top-line($size: 10px, $line-color: black, $overlay-color: white, $left: 50%) {
+	position: relative;
+	&:before {
+		@include arrow-up($size, $overlay-color);
+		pointer-events: none;
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		top: -($size - 1);
+		z-index: 2;
+	}
+
+	&:after {
+		@include arrow-up($size, $line-color);
+		pointer-events: none;
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		top: -($size);
+	}
+}
+
+@mixin arrow-on-top-line-reverse($size: 10px, $line-color: black, $overlay-color: white, $right: 50%, $offset: 0) {
+	position: relative;
+	&:before {
+		@include arrow-down($size, $overlay-color);
+		position: absolute;
+		right: $right;
+		content: "";
+		margin-right: -$size;
+		top: -($size + $offset);
+		z-index: 666;
+	}
+
+	&:after {
+		@include arrow-down($size, $line-color);
+		position: absolute;
+		right: $right;
+		content: "";
+		margin-right: -$size;
+		top: -($size - 1 + $offset);
+	}
+
+}
+
+@mixin arrow-on-right($size: 10px, $color: black, $left: 50%) {
+	position: relative;
+
+	&:after {
+		@include arrow-right($size, $color);
+		position: absolute;
+		top: $left;
+		content: "";
+		margin-top: -$size;
+		right: -$size;
+	}
+}
+
+@mixin arrow-on-left($size: 10px, $color: black, $left: 50%) {
+	position: relative;
+
+	&:after {
+		@include arrow-left($size, $color);
+		position: absolute;
+		top: $left;
+		content: "";
+		margin-top: -$size;
+		left: -$size;
+	}
+}
+
+@mixin arrow-on-top($size: 10px, $color: black, $left: 50%) {
+	position: relative;
+
+	&:after {
+		@include arrow-up($size, $color);
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		top: -$size;
+	}
+}
+
+@mixin arrow-on-top-reverse($size: 10px, $color: black, $left: 50%) {
+	position: relative;
+
+	&:after {
+		@include arrow-down($size, $color);
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		top: -($size + 1);
+		z-index: 1;
 	}
 }

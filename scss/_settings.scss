@@ -1,18 +1,7 @@
 $break-small: 320px;
-$break-large: 1024px;
+$break-smedium: 480px;
+$break-medium: 720px;
+$break-large: 960px;
+$break-xlarge: 1280px;
 
-$the-map: ();
-
-@mixin respond ($min: $break-small, $max: $break-large) {
-	${@content};
-	// $the-map: append($the-map, @content);
-}
-
-
-@include respond () {
-	.sel {
-		color: red;
-	}
-}
-
-@debug $the-map;
+$font-default: $font-meta;
