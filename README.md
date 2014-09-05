@@ -381,7 +381,7 @@ Some advantages of this approach are the initial overview you get when you open 
 
 This approach might result in a lot repetition and is not so DRY compared to putting breakpoints in one module file. Factors contributing to this repetition are the fact you need to create 4+ files with the same name, write imports for this 4+ files and open this 4+ files. Another factor is it can easily create a lot of code duplication since breakpoints are often defined with boundaries. Often styles for tablet are the same as for the desktop. This disadvantage directly highlights the flaws of configuration over convention. If the module instead would have breakpoints by convention, it could break those conventions from time to time when necessary and at the same time avoid repetition — since there is just one module file.
 
-### Dealing with media query perfomance in SASS
+### Dealing with media queries
 
 The argument for combining all styles for a single breakpoint in a single media query is often performance. However, it turns out that browsers optimize media queries internally and it is not a perfomance issue at all, except for when you resize the browser. It is still not possible to create a construct in SASS to combine media queries. Mixins do support a '@content' directive. To combat the perfomance impact of multiple media queries especially in large projects the usage of a [Sass media query combiner](https://github.com/aaronjensen/sass-media_query_combiner)
 
@@ -390,6 +390,16 @@ The argument for combining all styles for a single breakpoint in a single media 
 - [Media query test](http://aaronjensen.github.io/media_query_test/)
 - [Stack overflow: Is there an advantage in grouping css media queries together?](http://stackoverflow.com/questions/11626174/is-there-an-advantage-in-grouping-css-media-queries-together)
 - [Sass media query combiner](https://github.com/aaronjensen/sass-media_query_combiner)
+
+
+- Zurb: 106
+- Erskine: 141
+- USAtoday: 64
+- [Japan times](http://www.japantimes.co.jp/): 17
+- [The Next Web](http://www.japantimes.co.jp/): 29
+- [Coolblue](http://www.coolblue.nl/): 75
+- [Tech crunch](http://www.coolblue.nl/): 272
+- [Mashable](http://mashable.com/): 131
 
 ## Proposed file structure
 
@@ -588,7 +598,6 @@ Contains boilerplate for the front-end.
 
 ### prototype/index.cfm
 Contains an overview of the prototype in the directory.
-
 
 ### Kitchen sink
 Inside the kitchen sink there is a overview of elements that often require styling, such as typography and tables. New elements such as notifications are a handy addition to the kitchen sink when they are made.
