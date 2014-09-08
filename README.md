@@ -276,6 +276,36 @@ Example in the styles
 }
 ```
 *`is-active &` is a trick in Sass to generate `.menu--item.is-active .menu-item--link {}`*
+**Only at first level selectors:**
+
+**SCSS**
+```SCSS
+.menu--item--link {
+	.is-active & {
+		background-color: white;
+	}
+}
+
+// BE EVIL
+.menu {
+	.menu--item--link {
+		.is-active & {
+			background-color: white;
+		}
+	}
+}
+```
+
+**CSS Output**
+```CSS
+.is-active .menu--item--link {
+  background-color: white; }
+
+.is-active .menu .menu--item--link {
+  background-color: white; }
+```
+
+
 
 Good names for states are:
 - is-shown
