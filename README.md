@@ -264,7 +264,7 @@ Example markup
 ```
 
 
-Example in the styles
+Example in the scss
 ```SCSS
 .menu {}
 .menu--item {}
@@ -276,9 +276,10 @@ Example in the styles
 }
 ```
 *`is-active &` is a trick in Sass to generate `.menu--item.is-active .menu-item--link {}`*
+
 **Only at first level selectors:**
 
-**SCSS**
+SCSS
 ```SCSS
 .menu--item--link {
 	.is-active & {
@@ -296,7 +297,7 @@ Example in the styles
 }
 ```
 
-**CSS Output**
+CSS Output
 ```CSS
 .is-active .menu--item--link {
   background-color: white; }
