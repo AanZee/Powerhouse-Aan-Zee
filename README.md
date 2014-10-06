@@ -444,9 +444,9 @@ scss/
 +-- _settings.scss
 +-- _global.scss
 +-- _typograpgy.scss
-+-- _reset.scss
++-- _reset.scss/_normalize.scss
 +-- _utils.scss
-+-- _font-scale.scss
++-- _fonts.scss
 +-- modules/
 |   +-- _layout.scss
 |   +-- _header.scss
@@ -489,13 +489,13 @@ Contains a font scale with mixins inspirid by the article [setting typographic s
 
 #### Adding fonts
 
-Inside the fonts folder all requirements for a single font are available, this includes the font files and a sass file to import the font. To create a font simply create a new folder with the font name with a `_font-settings.scss` file inside
+Inside the fonts folder all requirements for a single font are available, this includes the font files and a sass file to import the font. To create a font simply create a new folder with the font name with a `_imports.scss` file inside
 
 Example with the Meta font
 ```
 fonts/
 +-- meta/
-|   _font-settings.scss
+|   _imports.scss
 |   MetaWeb-Bold.eot
 |   MetaWeb-Bold.woff
 |   MetaWeb-Bolditalic.eot
@@ -510,14 +510,16 @@ fonts/
 |   MetaWeb-Normalitalic.woff
 ```
 
-#### Font scales
+#### Fonts
 
-Inside the `_font-scales.scss` file should contain a map variable prefixed with `$font-{name of font}`. In the case of Meta it would be `$font-meta`.
+The `_fonts.scss` file should contain font-scales, and font variables. A font scale is a map variable prefixed with `$font-scale-{name of font}`. In the case of Meta it would be `$font-meta`.
 
 Example `_font-scales.scss` for the Meta font:
 ```SCSS
-$font-meta: (
-	stack: "Meta, sans-serif",
+$font-meta: "Meta, sans-serif";
+
+$font-scale-meta: (
+	stack: $font-meta,
 	1: (
 		font-size: 11px,
 		line-height: 18px
@@ -589,13 +591,14 @@ A font map should contain at least 1-14 scale variants and a `stack` property.
 To support multiple font variants which share the same font scale you can merge the map already set. `Meta serif` is the perfect example for this.
 
 ```SCSS
-$font-meta: (
+$font-scale-meta: (
 	// ...
 );
 
 // First argument is the map you want to copy and overwrite
 // Second argument is a map with properties you want to have in your new map
-$font-meta-serif: map-merge($font-meta, ( stack: "'Meta serif', serif" ) );
+$font-meta-serif: "'Meta serif', serif";
+$font-scale-meta-serif: map-merge($font-scale-meta, ( stack: $font-meta-serif ) );
 ```
 
 # Front-end development of
